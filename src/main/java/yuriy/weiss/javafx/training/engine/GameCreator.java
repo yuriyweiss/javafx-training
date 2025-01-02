@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import yuriy.weiss.javafx.training.model.*;
 import yuriy.weiss.javafx.training.model.cell.Cell;
 import yuriy.weiss.javafx.training.model.cell.CellType;
+import yuriy.weiss.javafx.training.util.IdGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +64,7 @@ public class GameCreator {
         createWaterCells( boardCells, boardSize );
         List<Position> freeGroundPositions = buildFreeGroundPositions( boardCells, boardSize );
         generateSpecialCells( boardCells, freeGroundPositions, specialCellCounts );
-        fillRemainingGroundCells(boardCells, freeGroundPositions);
+        fillRemainingGroundCells( boardCells, freeGroundPositions );
         return boardCells;
     }
 
@@ -109,10 +110,21 @@ public class GameCreator {
             Integer cellCount = ( Integer ) specialCellCount[1];
             for ( int j = 0; j < cellCount; j++ ) {
                 int freeIndex = RANDOM.nextInt( freeGroundPositions.size() );
-                Position cellPosition = freeGroundPositions.remove( freeIndex );
+                Position cellPosition = freeGroundPositions.remove( freeIndex ); //NOSONAR
                 int x = cellPosition.getX();
                 int y = cellPosition.getY();
-                boardCells[y][x] = new Cell( new Position( x, y ), RANDOM.nextInt( 4 ), cellType );
+                Cell newCell = new Cell( new Position( x, y ), RANDOM.nextInt( 4 ), cellType );
+                addCoisToTreasureCell( cellType, newCell );
+                boardCells[y][x] = newCell;
+            }
+        }
+    }
+
+    private void addCoisToTreasureCell( CellType cellType, Cell newCell ) {
+        if ( cellType.getTreasureSize() > 0 ) {
+            for ( int c = 0; c < cellType.getTreasureSize(); c++ ) {
+                Coin newCoin = new Coin( IdGenerator.getNextId() );
+                newCell.getCoins().add( newCoin );
             }
         }
     }

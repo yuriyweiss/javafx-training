@@ -3,12 +3,10 @@ package yuriy.weiss.javafx.training;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
+import yuriy.weiss.javafx.training.engine.BoardPaneBuilder;
 import yuriy.weiss.javafx.training.engine.GameCreator;
 import yuriy.weiss.javafx.training.model.Game;
 
@@ -32,20 +30,7 @@ public class MainForm extends Application {
         Game game = new GameCreator().createGame( 2, 7 );
         log.info( "game created" );
         log.info( "board states size: {}", game.getBoardStates().size() );
-        Rectangle box1 = new Rectangle( 100, 50, Color.BLUE );
-        Rectangle box2 = new Rectangle( 100, 50, Color.rgb( 0, 0, 0, 0.25 ) );
-        transform( box1, box2 );
-        ImageView iv1 = new ImageView( "horse.png" );
-        Pane parentPane = new Pane();
-        parentPane.getChildren().addAll( box1, box2, iv1 );
-        return parentPane;
-    }
 
-    private void transform( Rectangle box1, Rectangle box2 ) {
-        box1.setTranslateX( 100 );
-        box1.setTranslateY( 200 );
-        box1.setRotate( 30 );
-        box2.setTranslateX( 100 );
-        box2.setTranslateY( 200 );
+        return new BoardPaneBuilder().buildPane( game.getBoardStates().get( 0 ) );
     }
 }
