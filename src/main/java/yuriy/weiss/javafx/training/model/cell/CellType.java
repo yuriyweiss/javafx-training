@@ -2,24 +2,24 @@ package yuriy.weiss.javafx.training.model.cell;
 
 public enum CellType {
 
-    WATER( "water.png", 0, 0 ),
-    GROUND( "ground.png", 0, 0 ),
-    CROCODILE( "crocodile.png", 0, 0 ),
-    TREASURE_1( "treasure1.png", 1, 0 ),
-    TREASURE_2( "treasure2.png", 2, 0 );
+    WATER( "water", 0, 0 ),
+    GROUND( "ground", 0, 0 ),
+    CROCODILE( "crocodile", 0, 0 ),
+    TREASURE_1( "treasure1", 1, 0 ),
+    TREASURE_2( "treasure2", 2, 0 );
 
-    private final String imageFile;
+    private final String imageName;
     private final int treasureSize;
     private final int labyrinthSize;
 
-    CellType( String imageFile, int treasureSize, int labyrinthSize ) {
-        this.imageFile = imageFile;
+    CellType( String imageName, int treasureSize, int labyrinthSize ) {
+        this.imageName = imageName;
         this.treasureSize = treasureSize;
         this.labyrinthSize = labyrinthSize;
     }
 
-    public String getImageFile() {
-        return imageFile;
+    public String getImageName() {
+        return imageName;
     }
 
     public int getTreasureSize() {

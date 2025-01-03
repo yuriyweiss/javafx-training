@@ -6,8 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
-import yuriy.weiss.javafx.training.engine.BoardPaneBuilder;
-import yuriy.weiss.javafx.training.engine.GameCreator;
+import yuriy.weiss.javafx.training.view.BoardPane;
+import yuriy.weiss.javafx.training.model.GameCreator;
 import yuriy.weiss.javafx.training.model.Game;
 
 @Slf4j
@@ -31,6 +31,6 @@ public class MainForm extends Application {
         log.info( "game created" );
         log.info( "board states size: {}", game.getBoardStates().size() );
 
-        return new BoardPaneBuilder().buildPane( game.getBoardStates().get( 0 ) );
+        return new BoardPane().buildPane( game.getBoardStates().get( 0 ) );
     }
 }

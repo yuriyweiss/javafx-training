@@ -1,8 +1,7 @@
-package yuriy.weiss.javafx.training.engine;
+package yuriy.weiss.javafx.training.model;
 
 import javafx.scene.paint.Color;
 import lombok.extern.slf4j.Slf4j;
-import yuriy.weiss.javafx.training.model.*;
 import yuriy.weiss.javafx.training.model.cell.Cell;
 import yuriy.weiss.javafx.training.model.cell.CellType;
 import yuriy.weiss.javafx.training.util.IdGenerator;

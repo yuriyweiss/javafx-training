@@ -2,8 +2,7 @@ package yuriy.weiss.javafx.training.model;
 
 import lombok.Getter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Ship {
 
@@ -11,7 +10,7 @@ public class Ship {
     private final Team team;
     @Getter
     private final Position position;
-    private final Set<Pirate> piratesOnBoard = new HashSet<>();
+    private final List<Pirate> piratesOnBoard = new ArrayList<>();
 
     public Ship( Team team, Position position ) {
         this.team = team;
@@ -24,6 +23,10 @@ public class Ship {
 
     public void removePirate( Pirate pirate ) {
         piratesOnBoard.remove( pirate );
+    }
+
+    public List<Pirate> getPiratesOnBoard() {
+        return Collections.unmodifiableList( piratesOnBoard );
     }
 
     public void setPosition( int x, int y ) {
