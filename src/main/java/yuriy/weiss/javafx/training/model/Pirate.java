@@ -24,6 +24,14 @@ public class Pirate {
         this.stateInCell = stateInCell;
     }
 
+    public Pirate( Team team, Pirate source ) {
+        this.id = source.getId();
+        this.team = team;
+        this.position = new Position( source.getPosition() );
+        this.coin = source.getCoin() == null ? null : new Coin( source.getCoin().id() );
+        this.alive = source.isAlive();
+    }
+
     public Color getColor() {
         return team.getColor();
     }

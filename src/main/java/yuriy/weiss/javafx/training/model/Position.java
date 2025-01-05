@@ -12,4 +12,8 @@ public class Position {
         this.x = x;
         this.y = y;
     }
+
+    public Position( Position source ) {
+        this( source.getX(), source.getY() );
+    }
 }

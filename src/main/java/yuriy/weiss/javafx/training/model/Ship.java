@@ -19,6 +19,19 @@ public class Ship {
         this.position = position;
     }
 
+    public Ship( Team team, Ship source ) {
+        this.team = team;
+        this.position = new Position(source.getPosition());
+        Set<Pirate> newPirates = team.getPirates();
+        source.piratesOnBoard.forEach( sourcePirate -> {
+            Pirate newPirate = newPirates.stream()
+                    .filter(e->e.equals(sourcePirate))
+                    .findFirst()
+                    .orElseThrow();
+            this.putPirate( newPirate );
+        } );
+    }
+
     public void putPirate( Pirate pirate ) {
         piratesOnBoard.add( pirate );
     }

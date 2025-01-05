@@ -30,6 +30,12 @@ public class Team {
         this.ship = new Ship( this, shipPosition );
     }
 
+    public Team( Team source ) {
+        this.color = source.getColor();
+        source.pirates.forEach(pirate -> this.addPirate( new Pirate(this, pirate) ) );
+        this.ship = new Ship(this, source.getShip());
+    }
+
     public Set<Pirate> getPirates() {
         return Collections.unmodifiableSet( pirates );
     }
