@@ -1,0 +1,40 @@
+package yuriy.weiss.javafx.training.controller;
+
+import javafx.scene.image.ImageView;
+import org.apache.commons.lang3.tuple.Pair;
+import yuriy.weiss.javafx.training.model.Board;
+import yuriy.weiss.javafx.training.model.Pirate;
+import yuriy.weiss.javafx.training.model.Team;
+import yuriy.weiss.javafx.training.model.cell.Cell;
+import yuriy.weiss.javafx.training.util.JsonUtils;
+
+public class DragDropController {
+
+    private Board board;
+
+    public void setBoard( Board board ) {
+        this.board = board;
+    }
+
+    public void dropToCell( Cell cell, String sourceString ) {
+        Pair<DragSource, String> dragInfo = DragSource.splitDragInfo( sourceString );
+        DragSource dragSource = dragInfo.getLeft();
+        String jsonString = dragInfo.getRight();
+        if ( dragSource == DragSource.PIRATE ) {
+            Pirate stub = JsonUtils.jsonStringToObject( jsonString, Pirate.class );
+            Team team = stub.getRealTeam( board.getTeams() );
+            Pirate pirate = team.getPirate(stub.getId());
+            int prevX = pirate.getPosition().getX();
+            int prevY = pirate.getPosition().getY();
+            // TODO remove pirate from prev cell or ship
+
+            // TODO create custom view grid on board creation, to search prev view by prev position
+//             ImageView imageView = findPrevView()
+//             if ()
+//             team.getShip().
+            // TODO open cell if closed
+            // TODO add pirate to cell
+
+        }
+    }
+}

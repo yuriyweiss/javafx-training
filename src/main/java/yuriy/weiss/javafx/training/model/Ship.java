@@ -1,15 +1,17 @@
 package yuriy.weiss.javafx.training.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.*;
 
+@NoArgsConstructor
 public class Ship {
 
     @Getter
-    private final Team team;
+    private Team team;
     @Getter
-    private final Position position;
+    private Position position;
     private final List<Pirate> piratesOnBoard = new ArrayList<>();
 
     public Ship( Team team, Position position ) {

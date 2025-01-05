@@ -1,22 +1,28 @@
 package yuriy.weiss.javafx.training.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.scene.paint.Color;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+@NoArgsConstructor
 public class Team {
 
     @Getter
-    private final Color color;
+    private Color color;
     @Getter
     @Setter
+    @JsonIgnore
     private Ship ship;
+    @JsonIgnore
     private final Set<Pirate> pirates = new HashSet<>();
     @Getter
+    @JsonIgnore
     private final Set<Coin> coins = new HashSet<>();
 
     public Team( Color color, Position shipPosition ) {
@@ -32,6 +38,13 @@ public class Team {
         if ( pirate.getTeam().equals( this ) ) {
             pirates.add( pirate );
         }
+    }
+
+    public Pirate getPirate( int pirateId ) {
+        return pirates.stream()
+                .filter( e -> pirateId == e.getId() )
+                .findFirst()
+                .orElseThrow();
     }
 
     @Override

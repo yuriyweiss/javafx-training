@@ -16,8 +16,11 @@ public class ShipView extends BoardElementView {
     private final Pane cellPane;
     private final Ship ship;
 
+    private ImageView imageView;
+
     public void createView() {
         ImageView shipView = buildShipImageView();
+        this.imageView = shipView;
         cellPane.getChildren().add( shipView );
         for ( int i = 0; i < ship.getPiratesOnBoard().size(); i++ ) {
             Pirate pirate = ship.getPiratesOnBoard().get( i );

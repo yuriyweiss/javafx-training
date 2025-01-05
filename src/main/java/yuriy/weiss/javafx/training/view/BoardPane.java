@@ -4,15 +4,22 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import lombok.extern.slf4j.Slf4j;
 import yuriy.weiss.javafx.training.controller.BoardPaneController;
+import yuriy.weiss.javafx.training.controller.DragAcceptController;
+import yuriy.weiss.javafx.training.controller.DragDropController;
 import yuriy.weiss.javafx.training.model.Board;
 
 @Slf4j
 public class BoardPane {
 
     private final BoardPaneController boardPaneController = new BoardPaneController();
-    private final CellPaneBuilder cellPaneBuilder = new CellPaneBuilder( boardPaneController );
+    private final DragAcceptController dragAcceptController = new DragAcceptController();
+    private final DragDropController dragDropController = new DragDropController();
+    private final CellPaneBuilder cellPaneBuilder =
+            new CellPaneBuilder( boardPaneController, dragAcceptController, dragDropController );
 
     public Pane buildPane( Board board ) {
+        dragAcceptController.setBoard( board );
+        dragDropController.setBoard( board );
         GridPane gridPane = new GridPane();
         int boardSize = board.getSize();
         for ( int i = 0; i < boardSize; i++ ) {

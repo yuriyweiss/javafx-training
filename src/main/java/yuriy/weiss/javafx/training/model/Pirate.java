@@ -2,16 +2,27 @@ package yuriy.weiss.javafx.training.model;
 
 import javafx.scene.paint.Color;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
+@NoArgsConstructor
 public class Pirate {
 
-    private final int id;
-    private final Team team;
-    private final Position position;
-    private final StateInCell stateInCell;
+    private int id;
+    private Team team;
+    private Position position;
+    private StateInCell stateInCell;
     private boolean alive = true;
     private Coin coin = null;
+
+    public Pirate( int id, Team team, Position position, StateInCell stateInCell ) {
+        this.id = id;
+        this.team = team;
+        this.position = position;
+        this.stateInCell = stateInCell;
+    }
 
     public Color getColor() {
         return team.getColor();
@@ -49,5 +60,20 @@ public class Pirate {
                 ", stateInCell=" + stateInCell +
                 ", coin=" + coin +
                 '}';
+    }
+
+    public void attachRealTeam( List<Team> teams ) {
+        this.team = getRealTeam( teams );
+    }
+
+    public Team getRealTeam( List<Team> teams ) {
+        return teams.stream()
+                .filter( e -> e.getColor().equals( getColor() ) )
+                .findFirst()
+                .orElseThrow();
+    }
+
+    public boolean isOnShip() {
+        return team.getShip().getPiratesOnBoard().contains( this );
     }
 }
