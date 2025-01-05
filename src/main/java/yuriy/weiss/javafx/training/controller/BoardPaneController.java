@@ -2,7 +2,7 @@ package yuriy.weiss.javafx.training.controller;
 
 import yuriy.weiss.javafx.training.model.Ship;
 import yuriy.weiss.javafx.training.model.cell.Cell;
-import yuriy.weiss.javafx.training.view.BoardElementView;
+import yuriy.weiss.javafx.training.view.element.AbstractElementView;
 
 import static yuriy.weiss.javafx.training.controller.FocusedType.*;
 
@@ -10,7 +10,7 @@ public class BoardPaneController {
 
     private final PrevFocusHolder prevFocusHolder = new PrevFocusHolder();
 
-    public void fireFocusChanged( BoardElementView elementView, FocusedType focusedType, Object focusedObject ) {
+    public void fireFocusChanged( AbstractElementView elementView, FocusedType focusedType, Object focusedObject ) {
         if ( prevFocusHolder.getType() != null && !containes( prevFocusHolder, focusedType, focusedObject ) ) {
             removeFocus( prevFocusHolder );
         }

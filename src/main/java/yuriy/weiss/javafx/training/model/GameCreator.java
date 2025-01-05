@@ -16,15 +16,20 @@ public class GameCreator {
     private static final Random RANDOM = new Random();
 
     public static void main( String[] args ) {
-        Game game = new GameCreator().createGame( 2, 7 );
+        new GameCreator().initGame( 2, 7 );
         log.info( "game created" );
-        log.info( "board states size: {}", game.getBoardStates().size() );
+        log.info( "board states size: {}", Game.getInstance().getBoards().size() );
     }
 
-    public Game createGame( int teamsCount, int boardSize ) {
-        Game result = new Game();
-        result.addBoardState( createBoard( teamsCount, boardSize ) );
-        return result;
+    public void initGame( int teamsCount, int boardSize ) {
+        Game game = Game.getInstance();
+        Board startBoard = createBoard( teamsCount, boardSize );
+        game.getBoards().add( startBoard );
+        Board currentBoard = new Board( startBoard );
+        game.setCurrentBoard( currentBoard );
+        Team firstTeam = currentBoard.getTeams().get( 0 );
+        game.setActiveTeam( firstTeam );
+        game.setCurrentMove( new Move( new Team( firstTeam ) ) );
     }
 
     private Board createBoard( int teamsCount, int boardSize ) {

@@ -5,20 +5,20 @@ import yuriy.weiss.javafx.training.model.Coin;
 import yuriy.weiss.javafx.training.model.Pirate;
 import yuriy.weiss.javafx.training.model.Ship;
 import yuriy.weiss.javafx.training.model.cell.Cell;
-import yuriy.weiss.javafx.training.view.BoardElementView;
+import yuriy.weiss.javafx.training.view.element.AbstractElementView;
 
 @Getter
 public class PrevFocusHolder {
 
     private FocusedType type = null;
 
-    private BoardElementView elementView;
+    private AbstractElementView elementView;
     private Cell cell = null;
     private Ship ship = null;
     private Pirate pirate = null;
     private Coin coin = null;
 
-    public void setFocused( BoardElementView elementView, FocusedType focusedType, Object focusedObject ) {
+    public void setFocused( AbstractElementView elementView, FocusedType focusedType, Object focusedObject ) {
         clearFocus();
         this.type = focusedType;
         this.elementView = elementView;

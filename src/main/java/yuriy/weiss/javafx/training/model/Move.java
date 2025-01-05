@@ -1,6 +1,13 @@
 package yuriy.weiss.javafx.training.model;
 
-import yuriy.weiss.javafx.training.model.action.Action;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-public record Move(Team team, Pirate pirate, Action action) {
+@RequiredArgsConstructor
+@Getter
+public class Move {
+
+    private final Team team;
+
+    // TODO add steps, there can be several steps in one move
 }

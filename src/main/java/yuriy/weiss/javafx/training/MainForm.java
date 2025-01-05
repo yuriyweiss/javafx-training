@@ -27,10 +27,10 @@ public class MainForm extends Application {
     }
 
     private Parent createContent() {
-        Game game = new GameCreator().createGame( 2, 7 );
+        new GameCreator().initGame( 2, 7 );
         log.info( "game created" );
-        log.info( "board states size: {}", game.getBoardStates().size() );
+        log.info( "board states size: {}", Game.getInstance().getBoards().size() );
 
-        return new BoardPane().buildPane( game.getBoardStates().get( 0 ) );
+        return BoardPane.getInstance().rebuildPane();
     }
 }

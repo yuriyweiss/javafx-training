@@ -5,10 +5,9 @@ import lombok.RequiredArgsConstructor;
 import yuriy.weiss.javafx.training.controller.BoardPaneController;
 import yuriy.weiss.javafx.training.controller.DragAcceptController;
 import yuriy.weiss.javafx.training.controller.DragDropController;
-import yuriy.weiss.javafx.training.model.Board;
-import yuriy.weiss.javafx.training.model.Position;
-import yuriy.weiss.javafx.training.model.Ship;
-import yuriy.weiss.javafx.training.model.Team;
+import yuriy.weiss.javafx.training.model.*;
+import yuriy.weiss.javafx.training.view.element.CellView;
+import yuriy.weiss.javafx.training.view.element.ShipView;
 
 import java.util.Optional;
 
@@ -19,7 +18,8 @@ public class CellPaneBuilder {
     private final DragAcceptController dragAcceptController;
     private final DragDropController dragDropController;
 
-    public Pane createCellPane( int x, int y, Board board ) {
+    public Pane createCellPane( int x, int y ) {
+        Board board = Game.getInstance().getCurrentBoard();
         final Pane cellPane = new Pane();
         Ship ship = getShipAtPosition( x, y, board );
         if ( ship == null ) {
@@ -38,14 +38,21 @@ public class CellPaneBuilder {
     }
 
     public void createCellView( Pane cellPane, int x, int y, Board board ) {
-        new CellView( boardPaneController,
+        CellView cellView = new CellView( boardPaneController,
                 dragAcceptController,
                 dragDropController,
                 cellPane,
-                board.getCells()[y][x] ).createView();
+                board.getCells()[y][x] );
+        cellView.createView();
+        BoardPane.getInstance().getGridViews()[y][x] = cellView;
+
     }
 
     private void createShipView( Pane cellPane, Ship ship ) {
-        new ShipView( boardPaneController, cellPane, ship ).createView();
+        ShipView shipView = new ShipView( boardPaneController, cellPane, ship );
+        shipView.createView();
+        int shipX = ship.getPosition().getX();
+        int shipY = ship.getPosition().getY();
+        BoardPane.getInstance().getGridViews()[shipY][shipX] = shipView;
     }
 }

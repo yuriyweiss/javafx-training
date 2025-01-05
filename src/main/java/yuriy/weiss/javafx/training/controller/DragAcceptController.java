@@ -22,6 +22,12 @@ public class DragAcceptController {
         String jsonString = dragInfo.getRight();
         if ( dragSource == DragSource.PIRATE ) {
             return cellCanAcceptPirate( cell, jsonString );
+        } else if ( dragSource == DragSource.SHIP ) {
+            // TODO check if ship can move by water
+            return false;
+        } else if ( dragSource == DragSource.COIN ) {
+            // TODO check if pirate can drop coins to this cell
+            return false;
         }
         return false;
     }

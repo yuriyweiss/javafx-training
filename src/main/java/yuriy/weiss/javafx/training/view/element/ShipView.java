@@ -1,4 +1,4 @@
-package yuriy.weiss.javafx.training.view;
+package yuriy.weiss.javafx.training.view.element;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -10,7 +10,7 @@ import yuriy.weiss.javafx.training.model.Ship;
 import yuriy.weiss.javafx.training.util.ColorNames;
 
 @RequiredArgsConstructor
-public class ShipView extends BoardElementView {
+public class ShipView extends AbstractElementView implements GridCellView {
 
     private final BoardPaneController controller;
     private final Pane cellPane;
@@ -19,16 +19,22 @@ public class ShipView extends BoardElementView {
     private ImageView imageView;
 
     public void createView() {
-        ImageView shipView = buildShipImageView();
-        this.imageView = shipView;
-        cellPane.getChildren().add( shipView );
+        ImageView shipImageView = buildImageView();
+        this.imageView = shipImageView;
+        cellPane.getChildren().add( shipImageView );
         for ( int i = 0; i < ship.getPiratesOnBoard().size(); i++ ) {
             Pirate pirate = ship.getPiratesOnBoard().get( i );
             new PirateView( controller, cellPane, pirate, i ).createView();
         }
     }
 
-    private ImageView buildShipImageView() {
+    @Override
+    public void updateView() {
+        cellPane.getChildren().clear();
+        createView();
+    }
+
+    private ImageView buildImageView() {
         ImageView shipView = new ImageView( getImageName() );
         shipView.setUserData( ship );
         shipView.setLayoutX( 1 );
@@ -49,11 +55,5 @@ public class ShipView extends BoardElementView {
             shipImageName += "_focused";
         }
         return shipImageName + ".png";
-    }
-
-    @Override
-    public void updateView() {
-        cellPane.getChildren().clear();
-        createView();
     }
 }
