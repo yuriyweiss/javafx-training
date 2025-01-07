@@ -2,7 +2,6 @@ package yuriy.weiss.javafx.training.view;
 
 import javafx.scene.layout.Pane;
 import lombok.RequiredArgsConstructor;
-import yuriy.weiss.javafx.training.controller.BoardPaneController;
 import yuriy.weiss.javafx.training.controller.DragAcceptController;
 import yuriy.weiss.javafx.training.controller.DragDropController;
 import yuriy.weiss.javafx.training.model.*;
@@ -14,7 +13,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CellPaneBuilder {
 
-    private final BoardPaneController boardPaneController;
     private final DragAcceptController dragAcceptController;
     private final DragDropController dragDropController;
 
@@ -38,18 +36,18 @@ public class CellPaneBuilder {
     }
 
     public void createCellView( Pane cellPane, int x, int y, Board board ) {
-        CellView cellView = new CellView( boardPaneController,
-                dragAcceptController,
-                dragDropController,
-                cellPane,
-                board.getCells()[y][x] );
+        CellView cellView =
+                new CellView( dragAcceptController,
+                        dragDropController,
+                        cellPane,
+                        board.getCells()[y][x] );
         cellView.createView();
         BoardPane.getInstance().getGridViews()[y][x] = cellView;
 
     }
 
     private void createShipView( Pane cellPane, Ship ship ) {
-        ShipView shipView = new ShipView( boardPaneController, cellPane, ship );
+        ShipView shipView = new ShipView( cellPane, ship );
         shipView.createView();
         int shipX = ship.getPosition().getX();
         int shipY = ship.getPosition().getY();

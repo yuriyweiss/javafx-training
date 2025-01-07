@@ -4,16 +4,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import yuriy.weiss.javafx.training.controller.BoardPaneController;
-import yuriy.weiss.javafx.training.controller.FocusedType;
 import yuriy.weiss.javafx.training.model.Pirate;
 import yuriy.weiss.javafx.training.model.Ship;
 import yuriy.weiss.javafx.training.util.ColorNames;
 
 @RequiredArgsConstructor
-public class ShipView extends AbstractElementView implements GridCellView {
+public class ShipView implements ElementView, GridCellView {
 
-    private final BoardPaneController controller;
     private final Pane cellPane;
     @Getter
     private final Ship ship;
@@ -26,7 +23,7 @@ public class ShipView extends AbstractElementView implements GridCellView {
         cellPane.getChildren().add( shipImageView );
         for ( int i = 0; i < ship.getPiratesOnBoard().size(); i++ ) {
             Pirate pirate = ship.getPiratesOnBoard().get( i );
-            new PirateView( controller, cellPane, pirate, i ).createView();
+            new PirateView( cellPane, pirate, i ).createView();
         }
     }
 
@@ -41,21 +38,12 @@ public class ShipView extends AbstractElementView implements GridCellView {
         shipView.setUserData( ship );
         shipView.setLayoutX( 1 );
         shipView.setLayoutY( 1 );
-        shipView.setOnMouseClicked( e -> {
-            if ( !isFocused() ) {
-                setFocused( true );
-                controller.fireFocusChanged( this, FocusedType.SHIP, ship );
-            }
-        } );
         return shipView;
     }
 
     private String getImageName() {
         String teamColor = ColorNames.getColorName( ship.getTeam().getColor() );
         String shipImageName = "ship_" + teamColor;
-        if ( isFocused() ) {
-            shipImageName += "_focused";
-        }
         return shipImageName + ".png";
     }
 }

@@ -7,9 +7,8 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import lombok.RequiredArgsConstructor;
-import yuriy.weiss.javafx.training.controller.BoardPaneController;
 import yuriy.weiss.javafx.training.controller.DragSource;
-import yuriy.weiss.javafx.training.controller.FocusedType;
+import yuriy.weiss.javafx.training.model.Game;
 import yuriy.weiss.javafx.training.model.Pirate;
 import yuriy.weiss.javafx.training.util.ColorNames;
 import yuriy.weiss.javafx.training.util.JsonUtils;
@@ -19,9 +18,8 @@ import java.util.Objects;
 import static javafx.scene.input.DataFormat.PLAIN_TEXT;
 
 @RequiredArgsConstructor
-public class PirateView extends AbstractElementView {
+public class PirateView implements ElementView {
 
-    private final BoardPaneController controller;
     private final Pane cellPane;
     private final Pirate pirate;
     private final int position;
@@ -45,18 +43,12 @@ public class PirateView extends AbstractElementView {
         pirateImageView.setUserData( pirate );
         pirateImageView.setLayoutX( position * 16 + 1.0 );
         pirateImageView.setLayoutY( 33 );
-        pirateImageView.setOnMouseClicked( e -> {
-            if ( !isFocused() ) {
-                setFocused( true );
-                controller.fireFocusChanged( this, FocusedType.PIRATE, pirate );
-            }
-        } );
-        pirateImageView.setOnMouseDragged( e -> {
-            if ( isFocused() ) {
-                e.setDragDetect( true );
-            }
-        } );
+        pirateImageView.setOnMouseDragged( e -> e.setDragDetect( true ) );
         pirateImageView.setOnDragDetected( e -> {
+            if ( !pirate.getTeam().equals( Game.getInstance().getActiveTeam() ) ) {
+                e.consume();
+                return;
+            }
             Dragboard dragboard = pirateImageView.startDragAndDrop( TransferMode.MOVE );
             ClipboardContent content = new ClipboardContent();
             content.put( PLAIN_TEXT, DragSource.PIRATE.getPrefix() + JsonUtils.objectToJsonString( pirate ) );
@@ -70,9 +62,6 @@ public class PirateView extends AbstractElementView {
     private String getImageName() {
         String teamColor = ColorNames.getColorName( pirate.getTeam().getColor() );
         String pirateImageName = "pirate_" + teamColor;
-        if ( isFocused() ) {
-            pirateImageName += "_focused";
-        }
         return pirateImageName + ".png";
     }
 }

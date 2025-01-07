@@ -16,9 +16,6 @@ import yuriy.weiss.javafx.training.view.element.ShipView;
 public class DragDropController {
 
     public void dropToCell( Cell cell, String sourceString ) {
-        // clear focus, because it stores obsolete reference to old focused view
-        PrevFocusHolder.getInstance().clearFocus();
-
         Pair<DragSource, String> dragInfo = DragSource.splitDragInfo( sourceString );
         DragSource dragSource = dragInfo.getLeft();
         String jsonString = dragInfo.getRight();

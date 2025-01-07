@@ -4,11 +4,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import yuriy.weiss.javafx.training.controller.BoardPaneController;
 import yuriy.weiss.javafx.training.controller.DragAcceptController;
 import yuriy.weiss.javafx.training.controller.DragDropController;
 import yuriy.weiss.javafx.training.model.Game;
-import yuriy.weiss.javafx.training.view.element.AbstractElementView;
 import yuriy.weiss.javafx.training.view.element.GridCellView;
 
 @Slf4j
@@ -26,11 +24,10 @@ public class BoardPane {
         return instance;
     }
 
-    private final BoardPaneController boardPaneController = new BoardPaneController();
     private final DragAcceptController dragAcceptController = new DragAcceptController();
     private final DragDropController dragDropController = new DragDropController();
     private final CellPaneBuilder cellPaneBuilder =
-            new CellPaneBuilder( boardPaneController, dragAcceptController, dragDropController );
+            new CellPaneBuilder( dragAcceptController, dragDropController );
 
     private GridPane gridPane = null;
     @Getter

@@ -5,7 +5,6 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import yuriy.weiss.javafx.training.controller.BoardPaneController;
 import yuriy.weiss.javafx.training.controller.DragAcceptController;
 import yuriy.weiss.javafx.training.controller.DragDropController;
 import yuriy.weiss.javafx.training.model.Pirate;
@@ -13,9 +12,8 @@ import yuriy.weiss.javafx.training.model.cell.Cell;
 import yuriy.weiss.javafx.training.model.cell.CellType;
 
 @RequiredArgsConstructor
-public class CellView extends AbstractElementView implements GridCellView {
+public class CellView implements ElementView, GridCellView {
 
-    private final BoardPaneController controller;
     private final DragAcceptController dragAcceptController;
     private final DragDropController dragDropController;
     private final Pane cellPane;
@@ -30,7 +28,7 @@ public class CellView extends AbstractElementView implements GridCellView {
         cellPane.getChildren().add( cellImageView );
         for ( int i = 0; i < cell.getPirates().size(); i++ ) {
             Pirate pirate = cell.getPirates().get( i );
-            new PirateView( controller, cellPane, pirate, i ).createView();
+            new PirateView( cellPane, pirate, i ).createView();
         }
     }
 
@@ -46,14 +44,6 @@ public class CellView extends AbstractElementView implements GridCellView {
         cellImageView.setUserData( cell );
         cellImageView.setLayoutX( 1 );
         cellImageView.setLayoutY( 1 );
-        /*
-        cellImageView.setOnMouseClicked( e -> {
-            if ( !isFocused() ) {
-                this.setFocused( true );
-                controller.fireFocusChanged( this, FocusedType.CELL, cell );
-            }
-        } );
-        */
         cellImageView.setOnDragOver( e -> {
             boolean accept = dragAcceptController.cellCanAccept( cell, e.getDragboard().getString() );
             if ( accept ) {
@@ -77,9 +67,6 @@ public class CellView extends AbstractElementView implements GridCellView {
             } else {
                 imageName = cell.getCellType().getImageName();
             }
-        }
-        if ( isFocused() ) {
-            imageName += "_focused";
         }
         return imageName + ".png";
     }
