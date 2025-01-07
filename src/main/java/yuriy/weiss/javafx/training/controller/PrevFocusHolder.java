@@ -10,9 +10,21 @@ import yuriy.weiss.javafx.training.view.element.AbstractElementView;
 @Getter
 public class PrevFocusHolder {
 
+    private static PrevFocusHolder instance = null;
+
+    private PrevFocusHolder() {
+    }
+
+    public static PrevFocusHolder getInstance() {
+        if ( instance == null ) {
+            instance = new PrevFocusHolder();
+        }
+        return instance;
+    }
+
     private FocusedType type = null;
 
-    private AbstractElementView elementView;
+    private AbstractElementView elementView = null;
     private Cell cell = null;
     private Ship ship = null;
     private Pirate pirate = null;
@@ -38,7 +50,8 @@ public class PrevFocusHolder {
         }
     }
 
-    private void clearFocus() {
+    public void clearFocus() {
+        type = null;
         elementView = null;
         cell = null;
         ship = null;

@@ -8,9 +8,8 @@ import static yuriy.weiss.javafx.training.controller.FocusedType.*;
 
 public class BoardPaneController {
 
-    private final PrevFocusHolder prevFocusHolder = new PrevFocusHolder();
-
     public void fireFocusChanged( AbstractElementView elementView, FocusedType focusedType, Object focusedObject ) {
+        PrevFocusHolder prevFocusHolder = PrevFocusHolder.getInstance();
         if ( prevFocusHolder.getType() != null && !containes( prevFocusHolder, focusedType, focusedObject ) ) {
             removeFocus( prevFocusHolder );
         }

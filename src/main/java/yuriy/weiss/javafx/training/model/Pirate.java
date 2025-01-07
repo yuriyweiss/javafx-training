@@ -1,8 +1,10 @@
 package yuriy.weiss.javafx.training.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.scene.paint.Color;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import yuriy.weiss.javafx.training.util.ColorNames;
 
 import java.util.List;
 
@@ -32,6 +34,7 @@ public class Pirate {
         this.alive = source.isAlive();
     }
 
+    @JsonIgnore
     public Color getColor() {
         return team.getColor();
     }
@@ -63,7 +66,7 @@ public class Pirate {
     public String toString() {
         return "Pirate{" +
                 "id=" + id +
-                ", team.color=" + team.getColor() +
+                ", team.color=" + ColorNames.getColorName( team.getColor() ) +
                 ", position=" + position +
                 ", stateInCell=" + stateInCell +
                 ", coin=" + coin +
@@ -81,6 +84,7 @@ public class Pirate {
                 .orElseThrow();
     }
 
+    @JsonIgnore
     public boolean isOnShip() {
         return team.getShip().getPiratesOnBoard().contains( this );
     }

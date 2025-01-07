@@ -2,6 +2,7 @@ package yuriy.weiss.javafx.training.view.element;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import yuriy.weiss.javafx.training.controller.BoardPaneController;
 import yuriy.weiss.javafx.training.controller.FocusedType;
@@ -14,6 +15,7 @@ public class ShipView extends AbstractElementView implements GridCellView {
 
     private final BoardPaneController controller;
     private final Pane cellPane;
+    @Getter
     private final Ship ship;
 
     private ImageView imageView;

@@ -1,8 +1,10 @@
 package yuriy.weiss.javafx.training.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class Position {
 
     private int x;

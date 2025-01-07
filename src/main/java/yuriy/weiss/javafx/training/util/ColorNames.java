@@ -9,6 +9,9 @@ public class ColorNames {
     public static final String GREEN = "green";
     public static final String YELLOW = "yellow";
 
+    private ColorNames() {
+    }
+
     public static String getColorName( Color color ) {
         if ( color == Color.RED ) {
             return RED;
@@ -22,6 +25,13 @@ public class ColorNames {
         throw new RuntimeException( "Not team color: " + color.toString() );
     }
 
-    private ColorNames() {
+    public static Color getColorByName( String colorName ) {
+        return switch ( colorName ) {
+            case RED -> Color.RED;
+            case BLUE -> Color.BLUE;
+            case GREEN -> Color.GREEN;
+            case YELLOW -> Color.YELLOW;
+            default -> throw new RuntimeException( "Unknown color name: " + colorName );
+        };
     }
 }

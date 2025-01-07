@@ -3,14 +3,14 @@ package yuriy.weiss.javafx.training.view.element;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import yuriy.weiss.javafx.training.controller.BoardPaneController;
 import yuriy.weiss.javafx.training.controller.DragAcceptController;
 import yuriy.weiss.javafx.training.controller.DragDropController;
-import yuriy.weiss.javafx.training.controller.FocusedType;
+import yuriy.weiss.javafx.training.model.Pirate;
 import yuriy.weiss.javafx.training.model.cell.Cell;
 import yuriy.weiss.javafx.training.model.cell.CellType;
-import yuriy.weiss.javafx.training.view.element.AbstractElementView;
 
 @RequiredArgsConstructor
 public class CellView extends AbstractElementView implements GridCellView {
@@ -19,6 +19,7 @@ public class CellView extends AbstractElementView implements GridCellView {
     private final DragAcceptController dragAcceptController;
     private final DragDropController dragDropController;
     private final Pane cellPane;
+    @Getter
     private final Cell cell;
 
     private ImageView imageView;
@@ -27,6 +28,10 @@ public class CellView extends AbstractElementView implements GridCellView {
         ImageView cellImageView = buildImageView( cell );
         this.imageView = cellImageView;
         cellPane.getChildren().add( cellImageView );
+        for ( int i = 0; i < cell.getPirates().size(); i++ ) {
+            Pirate pirate = cell.getPirates().get( i );
+            new PirateView( controller, cellPane, pirate, i ).createView();
+        }
     }
 
     @Override
