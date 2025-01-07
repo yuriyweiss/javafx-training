@@ -5,8 +5,8 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import yuriy.weiss.javafx.training.controller.DragAcceptController;
-import yuriy.weiss.javafx.training.controller.DragDropController;
+import yuriy.weiss.javafx.training.controller.DragAcceptFacade;
+import yuriy.weiss.javafx.training.controller.DragDropFacade;
 import yuriy.weiss.javafx.training.model.Pirate;
 import yuriy.weiss.javafx.training.model.cell.Cell;
 import yuriy.weiss.javafx.training.model.cell.CellType;
@@ -14,8 +14,8 @@ import yuriy.weiss.javafx.training.model.cell.CellType;
 @RequiredArgsConstructor
 public class CellView implements ElementView, GridCellView {
 
-    private final DragAcceptController dragAcceptController;
-    private final DragDropController dragDropController;
+    private final DragAcceptFacade dragAcceptFacade;
+    private final DragDropFacade dragDropFacade;
     private final Pane cellPane;
     @Getter
     private final Cell cell;
@@ -45,16 +45,15 @@ public class CellView implements ElementView, GridCellView {
         cellImageView.setLayoutX( 1 );
         cellImageView.setLayoutY( 1 );
         cellImageView.setOnDragOver( e -> {
-            boolean accept = dragAcceptController.cellCanAccept( cell, e.getDragboard().getString() );
+            boolean accept = dragAcceptFacade.cellCanAccept( cell, e.getDragboard().getString() );
             if ( accept ) {
                 e.acceptTransferModes( TransferMode.MOVE );
             }
             e.consume();
         } );
         cellImageView.setOnDragDropped( e -> {
-            // Move move = dragDropController.prepareMove(cell, e.getDragboard().getString());
-            dragDropController.dropToCell( cell, e.getDragboard().getString() );
-
+            // TODO build steps chain, maybe user should select actions on next cells before finishing move
+            dragDropFacade.dropToCell( cell, e.getDragboard().getString() );
         } );
         return cellImageView;
     }

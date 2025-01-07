@@ -2,8 +2,8 @@ package yuriy.weiss.javafx.training.view;
 
 import javafx.scene.layout.Pane;
 import lombok.RequiredArgsConstructor;
-import yuriy.weiss.javafx.training.controller.DragAcceptController;
-import yuriy.weiss.javafx.training.controller.DragDropController;
+import yuriy.weiss.javafx.training.controller.DragAcceptFacade;
+import yuriy.weiss.javafx.training.controller.DragDropFacade;
 import yuriy.weiss.javafx.training.model.*;
 import yuriy.weiss.javafx.training.view.element.CellView;
 import yuriy.weiss.javafx.training.view.element.ShipView;
@@ -13,8 +13,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CellPaneBuilder {
 
-    private final DragAcceptController dragAcceptController;
-    private final DragDropController dragDropController;
+    private final DragAcceptFacade dragAcceptController;
+    private final DragDropFacade dragDropFacade;
 
     public Pane createCellPane( int x, int y ) {
         Board board = Game.getInstance().getCurrentBoard();
@@ -38,7 +38,7 @@ public class CellPaneBuilder {
     public void createCellView( Pane cellPane, int x, int y, Board board ) {
         CellView cellView =
                 new CellView( dragAcceptController,
-                        dragDropController,
+                        dragDropFacade,
                         cellPane,
                         board.getCells()[y][x] );
         cellView.createView();
@@ -47,7 +47,11 @@ public class CellPaneBuilder {
     }
 
     private void createShipView( Pane cellPane, Ship ship ) {
-        ShipView shipView = new ShipView( cellPane, ship );
+        ShipView shipView =
+                new ShipView( dragAcceptController,
+                        dragDropFacade,
+                        cellPane,
+                        ship );
         shipView.createView();
         int shipX = ship.getPosition().getX();
         int shipY = ship.getPosition().getY();

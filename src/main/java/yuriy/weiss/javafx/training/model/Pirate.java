@@ -39,9 +39,14 @@ public class Pirate {
         return team.getColor();
     }
 
-    public void setPosition( int x, int y ) {
+    public void updatePosition( int x, int y ) {
         this.position.setX( x );
         this.position.setY( y );
+    }
+
+    public void updatePosition( Position position ) {
+        this.position.setX( position.getX() );
+        this.position.setY( position.getY() );
     }
 
     @Override

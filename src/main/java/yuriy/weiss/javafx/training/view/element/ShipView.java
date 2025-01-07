@@ -1,9 +1,12 @@
 package yuriy.weiss.javafx.training.view.element;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import yuriy.weiss.javafx.training.controller.DragAcceptFacade;
+import yuriy.weiss.javafx.training.controller.DragDropFacade;
 import yuriy.weiss.javafx.training.model.Pirate;
 import yuriy.weiss.javafx.training.model.Ship;
 import yuriy.weiss.javafx.training.util.ColorNames;
@@ -11,6 +14,8 @@ import yuriy.weiss.javafx.training.util.ColorNames;
 @RequiredArgsConstructor
 public class ShipView implements ElementView, GridCellView {
 
+    private final DragAcceptFacade dragAcceptFacade;
+    private final DragDropFacade dragDropFacade;
     private final Pane cellPane;
     @Getter
     private final Ship ship;
@@ -34,11 +39,24 @@ public class ShipView implements ElementView, GridCellView {
     }
 
     private ImageView buildImageView() {
-        ImageView shipView = new ImageView( getImageName() );
-        shipView.setUserData( ship );
-        shipView.setLayoutX( 1 );
-        shipView.setLayoutY( 1 );
-        return shipView;
+        ImageView shipImageView = new ImageView( getImageName() );
+        shipImageView.setUserData( ship );
+        shipImageView.setLayoutX( 1 );
+        shipImageView.setLayoutY( 1 );
+        // TODO add onMouseDrag
+        // TODO add onDragDetected
+        shipImageView.setOnDragOver( e -> {
+            boolean accept = dragAcceptFacade.shipCanAccept( ship, e.getDragboard().getString() );
+            if ( accept ) {
+                e.acceptTransferModes( TransferMode.MOVE );
+            }
+            e.consume();
+        } );
+        shipImageView.setOnDragDropped( e -> {
+            // TODO create step and finish move
+            dragDropFacade.dropToShip( ship, e.getDragboard().getString() );
+        } );
+        return shipImageView;
     }
 
     private String getImageName() {

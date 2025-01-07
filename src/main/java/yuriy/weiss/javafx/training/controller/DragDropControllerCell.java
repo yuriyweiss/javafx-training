@@ -13,7 +13,7 @@ import yuriy.weiss.javafx.training.view.element.ElementView;
 import yuriy.weiss.javafx.training.view.element.GridCellView;
 import yuriy.weiss.javafx.training.view.element.ShipView;
 
-public class DragDropController {
+public class DragDropControllerCell {
 
     public void dropToCell( Cell cell, String sourceString ) {
         Pair<DragSource, String> dragInfo = DragSource.splitDragInfo( sourceString );
@@ -28,8 +28,10 @@ public class DragDropController {
                 cell.setClosed( false );
             }
             addPirateToTargetCellView( cell, pirate );
+            pirate.updatePosition( cell.getPosition() );
         } else if ( dragSource == DragSource.SHIP ) {
             // TODO move ship to new cell
+            // ship can be moved only near its team side of board
         } else if ( dragSource == DragSource.COIN ) {
             // TODO place coin to cell coins stack
         }
