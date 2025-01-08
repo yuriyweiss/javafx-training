@@ -7,6 +7,7 @@ import yuriy.weiss.javafx.training.model.Ship;
 import yuriy.weiss.javafx.training.model.Team;
 import yuriy.weiss.javafx.training.model.cell.Cell;
 import yuriy.weiss.javafx.training.util.JsonUtils;
+import yuriy.weiss.javafx.training.util.TeamUtils;
 import yuriy.weiss.javafx.training.view.BoardPane;
 import yuriy.weiss.javafx.training.view.element.CellView;
 import yuriy.weiss.javafx.training.view.element.ElementView;
@@ -21,7 +22,7 @@ public class DragDropControllerCell {
         String jsonString = dragInfo.getRight();
         if ( dragSource == DragSource.PIRATE ) {
             Pirate stub = JsonUtils.jsonStringToObject( jsonString, Pirate.class );
-            Team team = stub.getRealTeam( Game.getInstance().getCurrentBoard().getTeams() );
+            Team team = TeamUtils.getRealTeam( Game.getInstance().getCurrentBoard().getTeams(), stub.getColor() );
             Pirate pirate = team.getPirate( stub.getId() );
             removePirateFromSourceView( pirate );
             if ( cell.isClosed() ) {

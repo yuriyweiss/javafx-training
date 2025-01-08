@@ -44,6 +44,7 @@ public class CellView implements ElementView, GridCellView {
         cellImageView.setUserData( cell );
         cellImageView.setLayoutX( 1 );
         cellImageView.setLayoutY( 1 );
+        // all types drop
         cellImageView.setOnDragOver( e -> {
             boolean accept = dragAcceptFacade.cellCanAccept( cell, e.getDragboard().getString() );
             if ( accept ) {

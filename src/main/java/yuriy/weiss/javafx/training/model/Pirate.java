@@ -5,6 +5,7 @@ import javafx.scene.paint.Color;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import yuriy.weiss.javafx.training.util.ColorNames;
+import yuriy.weiss.javafx.training.util.TeamUtils;
 
 import java.util.List;
 
@@ -76,17 +77,6 @@ public class Pirate {
                 ", stateInCell=" + stateInCell +
                 ", coin=" + coin +
                 '}';
-    }
-
-    public void attachRealTeam( List<Team> teams ) {
-        this.team = getRealTeam( teams );
-    }
-
-    public Team getRealTeam( List<Team> teams ) {
-        return teams.stream()
-                .filter( e -> e.getColor().equals( getColor() ) )
-                .findFirst()
-                .orElseThrow();
     }
 
     @JsonIgnore

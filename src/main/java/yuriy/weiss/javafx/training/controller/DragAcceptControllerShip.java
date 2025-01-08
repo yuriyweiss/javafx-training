@@ -7,6 +7,7 @@ import yuriy.weiss.javafx.training.model.Game;
 import yuriy.weiss.javafx.training.model.Pirate;
 import yuriy.weiss.javafx.training.model.Ship;
 import yuriy.weiss.javafx.training.util.JsonUtils;
+import yuriy.weiss.javafx.training.util.TeamUtils;
 
 import static yuriy.weiss.javafx.training.model.cell.CellType.WATER;
 
@@ -19,13 +20,14 @@ public class DragAcceptControllerShip {
         String jsonString = dragInfo.getRight();
         if ( dragSource == DragSource.PIRATE ) {
             return shipCanAcceptPirate( ship, jsonString );
+        } else {
+            return false;
         }
-        return false;
     }
 
     private boolean shipCanAcceptPirate( Ship ship, String jsonString ) {
         Pirate pirate = JsonUtils.jsonStringToObject( jsonString, Pirate.class );
-        pirate.attachRealTeam( Game.getInstance().getCurrentBoard().getTeams() );
+        TeamUtils.attachRealTeam( pirate, Game.getInstance().getCurrentBoard().getTeams() );
         int pirateX = pirate.getPosition().getX();
         int pirateY = pirate.getPosition().getY();
         boolean result = false;

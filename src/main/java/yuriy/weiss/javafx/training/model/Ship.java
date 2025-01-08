@@ -1,17 +1,25 @@
 package yuriy.weiss.javafx.training.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 public class Ship {
 
     @Getter
+    @Setter
     private Team team;
     @Getter
     private Position position;
+    @JsonIgnore
     private final List<Pirate> piratesOnBoard = new ArrayList<>();
 
     public Ship( Team team, Position position ) {
@@ -21,15 +29,20 @@ public class Ship {
 
     public Ship( Team team, Ship source ) {
         this.team = team;
-        this.position = new Position(source.getPosition());
+        this.position = new Position( source.getPosition() );
         Set<Pirate> newPirates = team.getPirates();
         source.piratesOnBoard.forEach( sourcePirate -> {
             Pirate newPirate = newPirates.stream()
-                    .filter(e->e.equals(sourcePirate))
+                    .filter( e -> e.equals( sourcePirate ) )
                     .findFirst()
                     .orElseThrow();
             this.putPirate( newPirate );
         } );
+    }
+
+    @JsonIgnore
+    public Color getColor() {
+        return team.getColor();
     }
 
     public void putPirate( Pirate pirate ) {
@@ -44,8 +57,13 @@ public class Ship {
         return Collections.unmodifiableList( piratesOnBoard );
     }
 
-    public void setPosition( int x, int y ) {
+    public void updatePosition( int x, int y ) {
         this.position.setX( x );
         this.position.setY( y );
+    }
+
+    public void updatePosition( Position position ) {
+        this.position.setX( position.getX() );
+        this.position.setY( position.getY() );
     }
 }
