@@ -22,6 +22,11 @@ public class CellView implements ElementView, GridCellView {
 
     private ImageView imageView;
 
+    @Override
+    public Pane getCellPane() {
+        return cellPane;
+    }
+
     public void createView() {
         ImageView cellImageView = buildImageView( cell );
         this.imageView = cellImageView;

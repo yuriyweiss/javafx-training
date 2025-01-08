@@ -7,6 +7,7 @@ import yuriy.weiss.javafx.training.model.cell.Cell;
 import yuriy.weiss.javafx.training.util.JsonUtils;
 import yuriy.weiss.javafx.training.util.TeamUtils;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static yuriy.weiss.javafx.training.model.cell.CellType.WATER;
@@ -94,13 +95,13 @@ public class DragAcceptControllerCell {
     }
 
     private boolean cellCanAcceptShip( Cell cell, String jsonString ) {
-        log.info( "got json: {}", jsonString );
+        log.trace( "got json: {}", jsonString );
         Ship ship = JsonUtils.jsonStringToObject( jsonString, Ship.class );
-        log.info( "ship deserialized: {}", ship );
+        log.trace( "ship deserialized: {}", ship );
         TeamUtils.attachRealTeam( ship, Game.getInstance().getCurrentBoard().getTeams() );
-        log.info( "ship source position: {}", ship.getPosition() );
+        log.trace( "ship source position: {}", ship.getPosition() );
         boolean result = cellCanAcceptShip( cell, ship );
-        log.info( "cell {} can accept ship: {}", cell.getPosition(), result );
+        log.trace( "cell {} can accept ship: {}", cell.getPosition(), result );
         return result;
     }
 
@@ -129,11 +130,19 @@ public class DragAcceptControllerCell {
 
     private boolean cellIsInTheCorner( Position cellPosition ) {
         int boardSize = Game.getInstance().getCurrentBoard().getSize();
-        List<Position> cornerPositions = List.of(
+        List<Position> cornerPositions = Arrays.asList(
                 new Position( 0, 0 ),
+                new Position( 1, 0 ),
+                new Position( 0, 1 ),
                 new Position( 0, boardSize - 1 ),
+                new Position( 1, boardSize - 1 ),
+                new Position( 0, boardSize - 2 ),
                 new Position( boardSize - 1, 0 ),
-                new Position( boardSize - 1, boardSize - 1 ) );
+                new Position( boardSize - 2, 0 ),
+                new Position( boardSize - 1, 1 ),
+                new Position( boardSize - 1, boardSize - 1 ),
+                new Position( boardSize - 2, boardSize - 1 ),
+                new Position( boardSize - 1, boardSize - 2 ) );
         return cornerPositions.contains( cellPosition );
     }
 

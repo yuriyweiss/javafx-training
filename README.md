@@ -2,7 +2,7 @@
 Study JavaFx drawing
 
 # to do next
-* Drag-drop ship across island shore; 
+* -ready- Drag-drop ship across island shore; 
 * Put coins to treasure cells; 
 * Drag-drop coins on pirates and cells;
 * Move pirates with coins. When pirate with coin reaches ship, coin is added to the team;

@@ -43,7 +43,6 @@ public class CellPaneBuilder {
                         board.getCells()[y][x] );
         cellView.createView();
         BoardPane.getInstance().getGridViews()[y][x] = cellView;
-
     }
 
     private void createShipView( Pane cellPane, Ship ship ) {

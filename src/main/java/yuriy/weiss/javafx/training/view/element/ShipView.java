@@ -30,6 +30,11 @@ public class ShipView implements ElementView, GridCellView {
 
     private ImageView imageView;
 
+    @Override
+    public Pane getCellPane() {
+        return cellPane;
+    }
+
     public void createView() {
         ImageView shipImageView = buildImageView();
         this.imageView = shipImageView;

@@ -60,10 +60,10 @@ public class Ship {
     public void updatePosition( int x, int y ) {
         this.position.setX( x );
         this.position.setY( y );
+        piratesOnBoard.forEach( pirate -> pirate.updatePosition( x, y ) );
     }
 
     public void updatePosition( Position position ) {
-        this.position.setX( position.getX() );
-        this.position.setY( position.getY() );
+        updatePosition( position.getX(), position.getY() );
     }
 }

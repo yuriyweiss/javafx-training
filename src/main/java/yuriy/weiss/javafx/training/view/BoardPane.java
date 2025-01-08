@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import yuriy.weiss.javafx.training.controller.DragAcceptFacade;
 import yuriy.weiss.javafx.training.controller.DragDropFacade;
 import yuriy.weiss.javafx.training.model.Game;
+import yuriy.weiss.javafx.training.model.Position;
 import yuriy.weiss.javafx.training.view.element.GridCellView;
 
 @Slf4j
@@ -45,11 +46,22 @@ public class BoardPane {
         // create new cells based on currentBoard state
         for ( int i = 0; i < boardSize; i++ ) {
             for ( int j = 0; j < boardSize; j++ ) {
-                final Pane cellPane = cellPaneBuilder.createCellPane( j, i );
+                Pane cellPane = cellPaneBuilder.createCellPane( j, i );
                 gridPane.add( cellPane, j, i );
             }
         }
         return gridPane;
+    }
+
+    public void rebuildCellPane( Position position ) {
+        rebuildCellPane( position.getX(), position.getY() );
+    }
+
+    public void rebuildCellPane( int x, int y ) {
+        Pane cellPane = gridViews[y][x].getCellPane();
+        gridPane.getChildren().remove( cellPane );
+        cellPane = cellPaneBuilder.createCellPane( x, y );
+        gridPane.add( cellPane, x, y );
     }
 
     public GridCellView getGridView( int x, int y ) {

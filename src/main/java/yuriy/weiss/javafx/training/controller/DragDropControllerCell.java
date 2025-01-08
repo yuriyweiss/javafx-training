@@ -31,8 +31,15 @@ public class DragDropControllerCell {
             addPirateToTargetCellView( cell, pirate );
             pirate.updatePosition( cell.getPosition() );
         } else if ( dragSource == DragSource.SHIP ) {
-            // TODO move ship to new cell
-            // ship can be moved only near its team side of board
+            Ship stub = JsonUtils.jsonStringToObject( jsonString, Ship.class );
+            Team team = TeamUtils.getRealTeam( Game.getInstance().getCurrentBoard().getTeams(), stub.getColor() );
+            Ship ship = team.getShip();
+            movePiratesFromCellToShip( cell, ship );
+            int prevX = ship.getPosition().getX();
+            int prevY = ship.getPosition().getY();
+            ship.updatePosition( cell.getPosition() );
+            BoardPane.getInstance().rebuildCellPane( prevX, prevY );
+            BoardPane.getInstance().rebuildCellPane( cell.getPosition() );
         } else if ( dragSource == DragSource.COIN ) {
             // TODO place coin to cell coins stack
         }
@@ -62,5 +69,17 @@ public class DragDropControllerCell {
         int targetY = cell.getPosition().getY();
         CellView targetCellView = ( CellView ) BoardPane.getInstance().getGridView( targetX, targetY );
         targetCellView.updateView();
+    }
+
+    private void movePiratesFromCellToShip( Cell cell, Ship ship ) {
+        if ( cell.getPirates().isEmpty() ) {
+            return;
+        }
+        // FIXME if pirates from other team, beat them
+        Team pirateTeam = cell.getPirates().get( 0 ).getTeam();
+        if ( pirateTeam.equals( Game.getInstance().getActiveTeam() ) ) {
+            cell.getPirates().forEach( ship::putPirate );
+            cell.getPirates().clear();
+        }
     }
 }
