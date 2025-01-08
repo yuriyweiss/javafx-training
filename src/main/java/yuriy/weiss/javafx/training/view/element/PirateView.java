@@ -7,6 +7,8 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import lombok.RequiredArgsConstructor;
+import yuriy.weiss.javafx.training.controller.DragAcceptFacade;
+import yuriy.weiss.javafx.training.controller.DragDropFacade;
 import yuriy.weiss.javafx.training.controller.DragSource;
 import yuriy.weiss.javafx.training.model.Game;
 import yuriy.weiss.javafx.training.model.Pirate;
@@ -20,6 +22,8 @@ import static javafx.scene.input.DataFormat.PLAIN_TEXT;
 @RequiredArgsConstructor
 public class PirateView implements ElementView {
 
+    private final DragAcceptFacade dragAcceptFacade;
+    private final DragDropFacade dragDropFacade;
     private final Pane cellPane;
     private final Pirate pirate;
     private final int position;
@@ -30,11 +34,13 @@ public class PirateView implements ElementView {
         final ImageView pirateImageView = buildImageView();
         this.imageView = pirateImageView;
         cellPane.getChildren().add( pirateImageView );
+        // TODO add coin view
     }
 
     @Override
     public void updateView() {
         cellPane.getChildren().removeIf( e -> Objects.equals( e.getUserData(), pirate ) );
+        // TODO remove coin
         createView();
     }
 
@@ -43,6 +49,7 @@ public class PirateView implements ElementView {
         pirateImageView.setUserData( pirate );
         pirateImageView.setLayoutX( position * 16 + 1.0 );
         pirateImageView.setLayoutY( 33 );
+        // pirate drag
         pirateImageView.setOnMouseDragged( e -> e.setDragDetect( true ) );
         pirateImageView.setOnDragDetected( e -> {
             if ( !pirate.getTeam().equals( Game.getInstance().getActiveTeam() ) ) {
@@ -56,6 +63,15 @@ public class PirateView implements ElementView {
             dragboard.setDragView( new Image( "pirate_drag.png" ) );
             e.consume();
         } );
+        // coin drop
+        pirateImageView.setOnDragOver( e -> {
+            boolean accept = dragAcceptFacade.pirateCanAccept( pirate, e.getDragboard().getString() );
+            if ( accept ) {
+                e.acceptTransferModes( TransferMode.MOVE );
+            }
+            e.consume();
+        } );
+        // TODO add drop event
         return pirateImageView;
     }
 

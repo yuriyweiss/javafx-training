@@ -40,7 +40,7 @@ public class DragDropControllerCell {
             ship.updatePosition( cell.getPosition() );
             BoardPane.getInstance().rebuildCellPane( prevX, prevY );
             BoardPane.getInstance().rebuildCellPane( cell.getPosition() );
-        } else if ( dragSource == DragSource.COIN ) {
+        } else if ( dragSource == DragSource.COIN_ON_PIRATE ) {
             // TODO place coin to cell coins stack
         }
     }
@@ -75,7 +75,7 @@ public class DragDropControllerCell {
         if ( cell.getPirates().isEmpty() ) {
             return;
         }
-        // FIXME if pirates from other team, beat them
+        // FIXME if pirates are from other team, beat them
         Team pirateTeam = cell.getPirates().get( 0 ).getTeam();
         if ( pirateTeam.equals( Game.getInstance().getActiveTeam() ) ) {
             cell.getPirates().forEach( ship::putPirate );

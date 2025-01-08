@@ -18,6 +18,8 @@ public class JsonUtils {
 
     private static final ObjectMapper OBJECT_MAPPER = createObjectMapper();
 
+    public static final String DRAG_INFO_SEPARATOR = "%SEPARATOR%";
+
     private JsonUtils() {
     }
 

@@ -41,7 +41,7 @@ public class ShipView implements ElementView, GridCellView {
         cellPane.getChildren().add( shipImageView );
         for ( int i = 0; i < ship.getPiratesOnBoard().size(); i++ ) {
             Pirate pirate = ship.getPiratesOnBoard().get( i );
-            new PirateView( cellPane, pirate, i ).createView();
+            new PirateView( dragAcceptFacade, dragDropFacade, cellPane, pirate, i ).createView();
         }
     }
 

@@ -31,7 +31,7 @@ public class Pirate {
         this.id = source.getId();
         this.team = team;
         this.position = new Position( source.getPosition() );
-        this.coin = source.getCoin() == null ? null : new Coin( source.getCoin().id() );
+        this.coin = source.getCoin() == null ? null : new Coin( source.getCoin().getId() );
         this.alive = source.isAlive();
     }
 

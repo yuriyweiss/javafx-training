@@ -5,7 +5,8 @@ import org.apache.commons.lang3.tuple.Pair;
 public enum DragSource {
 
     PIRATE( "PIRATE:" ),
-    COIN( "COIN:" ),
+    COIN_ON_CELL( "COIN_ON_CELL:" ),
+    COIN_ON_PIRATE( "COIN_ON_PIRATE:" ),
     SHIP( "SHIP:" );
 
     private final String dragStringPrefix;

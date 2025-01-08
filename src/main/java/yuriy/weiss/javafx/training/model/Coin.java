@@ -1,4 +1,15 @@
 package yuriy.weiss.javafx.training.model;
 
-public record Coin(int id) {
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public class Coin {
+
+    private int id;
+
+    public Coin( int id ) {
+        this.id = id;
+    }
 }

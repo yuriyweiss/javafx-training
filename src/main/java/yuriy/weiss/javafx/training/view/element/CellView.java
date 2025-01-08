@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import yuriy.weiss.javafx.training.controller.DragAcceptFacade;
 import yuriy.weiss.javafx.training.controller.DragDropFacade;
+import yuriy.weiss.javafx.training.model.Coin;
 import yuriy.weiss.javafx.training.model.Pirate;
 import yuriy.weiss.javafx.training.model.cell.Cell;
 import yuriy.weiss.javafx.training.model.cell.CellType;
@@ -31,9 +32,15 @@ public class CellView implements ElementView, GridCellView {
         ImageView cellImageView = buildImageView( cell );
         this.imageView = cellImageView;
         cellPane.getChildren().add( cellImageView );
-        for ( int i = 0; i < cell.getPirates().size(); i++ ) {
-            Pirate pirate = cell.getPirates().get( i );
-            new PirateView( cellPane, pirate, i ).createView();
+        if ( !cell.isClosed() ) {
+            for ( int i = 0; i < cell.getPirates().size(); i++ ) {
+                Pirate pirate = cell.getPirates().get( i );
+                new PirateView( dragAcceptFacade, dragDropFacade, cellPane, pirate, i ).createView();
+            }
+            for ( int i = 0; i < cell.getCoins().size(); i++ ) {
+                Coin coin = cell.getCoins().get( i );
+                new CoinOnCellView( cellPane, cell, coin, i ).createView();
+            }
         }
     }
 

@@ -23,7 +23,7 @@ public class DragAcceptControllerCell {
             return cellCanAcceptPirate( cell, jsonString );
         } else if ( dragSource == DragSource.SHIP ) {
             return cellCanAcceptShip( cell, jsonString );
-        } else if ( dragSource == DragSource.COIN ) {
+        } else if ( dragSource == DragSource.COIN_ON_PIRATE ) {
             // TODO check if pirate can drop coins to this cell
             return false;
         } else {

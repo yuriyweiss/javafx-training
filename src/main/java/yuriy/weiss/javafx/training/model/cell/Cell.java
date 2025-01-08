@@ -1,6 +1,8 @@
 package yuriy.weiss.javafx.training.model.cell;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import yuriy.weiss.javafx.training.model.Coin;
 import yuriy.weiss.javafx.training.model.Pirate;
 import yuriy.weiss.javafx.training.model.Position;
@@ -10,18 +12,20 @@ import yuriy.weiss.javafx.training.util.TeamUtils;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 @Data
+@NoArgsConstructor
 public class Cell {
 
-    private final Position position;
-    private final int rotation;
+    private Position position;
+    private int rotation;
     private boolean closed = true;
-    private final CellType cellType;
+    private CellType cellType;
 
+    @JsonIgnore
     private final List<Pirate> pirates = new ArrayList<>();
-    private final Queue<Coin> coins = new LinkedList<>();
+    @JsonIgnore
+    private final List<Coin> coins = new LinkedList<>();
 
     public Cell( Position position, int rotation, CellType cellType ) {
         this.position = position;
@@ -38,6 +42,6 @@ public class Cell {
             Pirate newPirate = TeamUtils.findPirate( teams, sourcePirate );
             this.pirates.add( newPirate );
         } );
-        source.coins.forEach( sourceCoin -> this.coins.add( new Coin( sourceCoin.id() ) ) );
+        source.coins.forEach( sourceCoin -> this.coins.add( new Coin( sourceCoin.getId() ) ) );
     }
 }
